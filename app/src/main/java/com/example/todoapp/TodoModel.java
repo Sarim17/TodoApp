@@ -55,6 +55,7 @@ public class TodoModel {
     public void addTodo(Todo todo){
 
         mTodoList.add(todo);
+        
 
     }
 
