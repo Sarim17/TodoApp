@@ -5,6 +5,7 @@ import java.util.UUID;
 
 public class Todo {
 
+    private UUID mId;
     private String mTitle;
     private String mDetail;
     private Date mDate;
@@ -22,8 +23,6 @@ public class Todo {
     public void setId(UUID id) {
         mId = id;
     }
-
-    private UUID mId;
 
     public String getTitle() {
         return mTitle;
@@ -56,5 +55,6 @@ public class Todo {
     public void setComplete(boolean complete) {
         mIsComplete = complete;
     }
+
 
 }

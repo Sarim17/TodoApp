@@ -13,11 +13,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity {
 
     //private ArrayList<Todo> mTodos = new ArrayList<Todo>();
     private String[] mTodos;
+    private Todo mTodo;
     private int mTodoIndex = 0;
 
     public static final String TAG = "TodoActivity";
@@ -38,6 +40,8 @@ public class MainActivity extends AppCompatActivity {
            like the view hierarchy */
         super.onCreate(savedInstanceState);
 
+        //mTodo = new Todo();
+
         Log.d(TAG, " **** Just to say the PC is in onCreate!");
 
         /* set the user interface layout for this Activity
@@ -49,6 +53,8 @@ public class MainActivity extends AppCompatActivity {
         if (savedInstanceState != null){
         mTodoIndex = savedInstanceState.getInt(TODO_INDEX, 0);
         }
+
+        //mTodo = TodoModel.get(MainActivity.this).getTodo();
 
         /* TODO: Refactor to data layer */
         Resources res = getResources();
@@ -62,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
 
         /* display the first task from mTodo array in the textViewTodo */
         textViewTodo.setText(mTodos[mTodoIndex]);
+        //textViewTodo.setText(mTodo.getTitle());
 
         Button buttonNext = (Button) findViewById(R.id.buttonNext);
         buttonNext.setOnClickListener(new View.OnClickListener(){

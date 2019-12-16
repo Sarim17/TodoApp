@@ -23,15 +23,15 @@ public class TodoModel {
 
         // refactor to pattern for data plugins
         // simulate some data for testing
-        /*
+
         for (int i=0; i < 3; i++){
             Todo todo = new Todo();
             todo.setTitle("Todo title " + i);
             todo.setDetail("Detail for task " + todo.getId().toString());
             todo.setComplete(false);
+
             mTodoList.add(todo);
         }
-        */
 
     }
 
@@ -55,7 +55,6 @@ public class TodoModel {
     public void addTodo(Todo todo){
 
         mTodoList.add(todo);
-        
 
     }
 
