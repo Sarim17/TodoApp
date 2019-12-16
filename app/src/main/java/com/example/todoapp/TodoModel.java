@@ -11,14 +11,14 @@ public class TodoModel {
 
     private ArrayList<Todo> mTodoList;
 
-    public static TodoModel get(Context context) {
+    public static TodoModel get() {
         if (sTodoModel == null) {
-            sTodoModel = new TodoModel(context);
+            sTodoModel = new TodoModel();
         }
         return sTodoModel;
     }
 
-    private TodoModel(Context context){
+    private TodoModel(){
         mTodoList = new ArrayList<>();
 
         // refactor to pattern for data plugins
@@ -35,12 +35,14 @@ public class TodoModel {
 
     }
 
+    //public Todo getTodo(UUID todoId) {
     public Todo getTodo(UUID todoId) {
 
         for (Todo todo : mTodoList) {
-            if (todo.getId().equals(todoId)){
+            /*if (todo.getId().equals(todoId)){
                 return todo;
-            }
+            }*/
+            return todo;
         }
 
         return null;

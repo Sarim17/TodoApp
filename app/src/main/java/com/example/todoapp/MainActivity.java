@@ -60,6 +60,17 @@ public class MainActivity extends AppCompatActivity {
         Resources res = getResources();
         mTodos = res.getStringArray(R.array.todo);
 
+        ArrayList todos = new ArrayList<>();
+        TodoModel todoModel = TodoModel.get();
+        todos = todoModel.getTodos();
+
+
+        Todo mTodo;
+        Todo todo = new Todo();
+        todo = (Todo) todos.get(mTodoIndex);
+        mTodo = todo;
+        //mTodo.getTitle();
+
         /* initialize member TextView so we can manipulate it later */
         final TextView textViewTodo;
         textViewTodo = (TextView) findViewById(R.id.textViewTodo);
@@ -67,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
         setTextViewComplete("");
 
         /* display the first task from mTodo array in the textViewTodo */
-        textViewTodo.setText(mTodos[mTodoIndex]);
+        textViewTodo.setText(mTodo.getTitle());
         //textViewTodo.setText(mTodo.getTitle());
 
         Button buttonNext = (Button) findViewById(R.id.buttonNext);
@@ -111,6 +122,15 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
+
+
+    }
+
+    private void updateUI(){
+
+
+
 
 
 
