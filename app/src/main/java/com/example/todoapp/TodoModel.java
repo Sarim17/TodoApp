@@ -27,7 +27,7 @@ public class TodoModel {
         for (int i=0; i < 3; i++){
             Todo todo = new Todo();
             todo.setTitle("Todo title " + i);
-            todo.setDetail("Detail for task "+ i + todo.getId().toString());
+            todo.setDetail("Detail for task "+ i);
             todo.setComplete(false);
 
             mTodoList.add(todo);

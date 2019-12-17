@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -140,6 +141,8 @@ public class MainActivity extends AppCompatActivity {
                 if (todos.size() == 0){
                     textViewTodo.setText("No Todos Left");
                 }else {
+                    Todo mTodoOld = (Todo) todos.get(mTodoIndex);
+                    setTextViewComplete("Deleted " + mTodoOld.getTitle());
                     todos.remove(mTodoIndex);
 
                     if (todos.size() > 0){
@@ -151,13 +154,38 @@ public class MainActivity extends AppCompatActivity {
 
                         Todo mTodo = (Todo) todos.get(mTodoIndex);
                         textViewTodo.setText(mTodo.getTitle());
+
                     }else {
                         textViewTodo.setText("No Todos Left");
                     }
 
                 }
 
-                setTextViewComplete("");
+
+            }
+        });
+
+        Button buttonAdd = (Button) findViewById(R.id.buttonAdd);
+        buttonAdd.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+
+                EditText text = (EditText) findViewById(R.id.addTodoText);
+                String newTodoText = String.valueOf(text.getText());
+                if (newTodoText.length() > 0) {
+                    Todo newTodo = new Todo();
+                    newTodo.setTitle(newTodoText);
+                    newTodo.setDetail("Detail for " + newTodoText);
+                    todos.add(newTodo);
+
+                    Todo mTodo = (Todo) todos.get(todos.size() - 1);
+                    textViewTodo.setText(mTodo.getTitle());
+                    setTextViewComplete("Added "+ newTodoText);
+                }else {
+                    setTextViewComplete("Empty");
+                }
+
+                //setTextViewComplete("");
 
             }
         });
