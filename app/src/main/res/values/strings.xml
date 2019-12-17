@@ -10,6 +10,7 @@
     <string name="buttonTodoDetailText">detail</string>
     <string name="request_code_mismatch">requestCode in intent does not match the parent requestCode</string>
     <string name="back_button_pressed">Back button pressed</string>
+    <string name="delete">Delete</string>
 
     <string-array name="todo">
         <item>Wake up</item>

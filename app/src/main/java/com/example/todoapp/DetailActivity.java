@@ -12,10 +12,16 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 public class DetailActivity extends AppCompatActivity {
 
     private int mTodoIndex;
-    private String[] todoDetails;
+    private String todoDetails;
+    private TodoModel todoModel = TodoModel.get();
+    private ArrayList todos = todoModel.getTodos();
+    //private Todo mTodo = (Todo) todos.get(mTodoIndex);
+
 
     /* Any calling activity would call this static method and pass the necessary
        key, value data pair in an intent object. */
@@ -48,13 +54,24 @@ public class DetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
 
+        String mTodoIndexa = getIntent().getStringExtra(TODO_INDEX);
+        Intent intent = this.getIntent();
+        Bundle bundle = intent.getExtras();
+        int mTodoIndexs = (int) bundle.getSerializable("INDEX");
+
         if (savedInstanceState != null){
             mTodoIndex = savedInstanceState.getInt(TODO_INDEX, 0);
         }
 
         /* TODO: refactor to a data layer */
         Resources res = getResources();
-        todoDetails = res.getStringArray(R.array.todo_detail);
+        //todoDetails = res.getStringArray(R.array.todo_detail);
+
+        Todo mTodo = (Todo) todos.get(mTodoIndexs);
+        todoDetails = mTodo.getDetail();
+
+
+
 
         /* get the intent extra int for the todos index */
         int mTodoIndex = getIntent().getIntExtra(TODO_INDEX, 0);
@@ -72,7 +89,8 @@ public class DetailActivity extends AppCompatActivity {
         textViewTodoDetail = (TextView) findViewById(R.id.textViewTodoDetail);
 
         /* display the first task from mTodo array in the TodoTextView */
-        textViewTodoDetail.setText(todoDetails[todoIndex]);
+        //textViewTodoDetail.setText(todoDetails[todoIndex]);
+        textViewTodoDetail.setText(todoDetails);
 
     }
 

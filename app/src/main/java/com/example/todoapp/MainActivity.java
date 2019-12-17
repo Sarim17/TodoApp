@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
 
     //private ArrayList<Todo> mTodos = new ArrayList<Todo>();
     private String[] mTodos;
-    private Todo mTodo;
+    //private Todo mTodo;
     private int mTodoIndex = 0;
 
     public static final String TAG = "TodoActivity";
@@ -32,7 +32,11 @@ public class MainActivity extends AppCompatActivity {
      * the alternative is to abstract view data to a ViewModel which can be in scope in all
      * Activity states and more suitable for larger amounts of data */
 
-    private static final String TODO_INDEX = "com.example.todoIndex";
+    private static final String TODO_INDEX = "com.example.mTodoIndex";
+
+    private TodoModel todoModel = TodoModel.get();
+    private ArrayList todos = todoModel.getTodos();
+    private Todo mTodo = (Todo) todos.get(mTodoIndex);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,15 +64,10 @@ public class MainActivity extends AppCompatActivity {
         Resources res = getResources();
         mTodos = res.getStringArray(R.array.todo);
 
-        ArrayList todos = new ArrayList<>();
-        TodoModel todoModel = TodoModel.get();
-        todos = todoModel.getTodos();
 
 
-        Todo mTodo;
-        Todo todo = new Todo();
-        todo = (Todo) todos.get(mTodoIndex);
-        mTodo = todo;
+
+
         //mTodo.getTitle();
 
         /* initialize member TextView so we can manipulate it later */
@@ -85,9 +84,12 @@ public class MainActivity extends AppCompatActivity {
         buttonNext.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                mTodoIndex = (mTodoIndex + 1) % mTodos.length;
-                textViewTodo.setText(mTodos[mTodoIndex]);
-                setTextViewComplete("");
+                if (todos.size() > 0) {
+                    mTodoIndex = (mTodoIndex + 1) % todos.size();
+                    Todo mTodo = (Todo) todos.get(mTodoIndex);
+                    textViewTodo.setText(mTodo.getTitle());
+                    setTextViewComplete("");
+                }
             }
         });
 
@@ -95,13 +97,17 @@ public class MainActivity extends AppCompatActivity {
         buttonPrev.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                if (mTodoIndex > 0){
-                    mTodoIndex = mTodoIndex - 1;
-                }else{
-                    mTodoIndex = mTodos.length - 1;
+                if (todos.size() > 0){
+                    if (mTodoIndex > 0){
+                        mTodoIndex = mTodoIndex - 1;
+                    }else{
+                        mTodoIndex = todos.size() - 1;
+                    }
+                    Todo mTodo = (Todo) todos.get(mTodoIndex);
+                    textViewTodo.setText(mTodo.getTitle());
+                    setTextViewComplete("");
                 }
-                textViewTodo.setText(mTodos[mTodoIndex]);
-                setTextViewComplete("");
+
             }
         });
 
@@ -109,16 +115,49 @@ public class MainActivity extends AppCompatActivity {
         buttonTodoDetail.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-
+                if (todos.size() > 0) {
                 /* Note, the child class being called has a static method determining the parameter
                    to be passed to it in the intent object */
-                Intent intent = DetailActivity.newIntent(MainActivity.this, mTodoIndex);
+                    Intent intent = DetailActivity.newIntent(MainActivity.this, mTodoIndex);
 
-                /* second param requestCode identifies the call as there could be many "intents" */
-                startActivityForResult(intent, IS_SUCCESS);
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("INDEX", mTodoIndex);
+                    intent.putExtras(bundle);
+
+                    /* second param requestCode identifies the call as there could be many "intents" */
+                    startActivityForResult(intent, IS_SUCCESS);
 
                 /* The result will return through
                    onActivityResult(requestCode, resultCode, Intent) method */
+                }
+            }
+        });
+
+        Button buttonDelete = (Button) findViewById(R.id.buttonDelete);
+        buttonDelete.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                if (todos.size() == 0){
+                    textViewTodo.setText("No Todos Left");
+                }else {
+                    todos.remove(mTodoIndex);
+
+                    if (todos.size() > 0){
+                        if (mTodoIndex > 0){
+                            mTodoIndex = mTodoIndex - 1;
+                        }else{
+                            mTodoIndex = todos.size() - 1;
+                        }
+
+                        Todo mTodo = (Todo) todos.get(mTodoIndex);
+                        textViewTodo.setText(mTodo.getTitle());
+                    }else {
+                        textViewTodo.setText("No Todos Left");
+                    }
+
+                }
+
+                setTextViewComplete("");
 
             }
         });

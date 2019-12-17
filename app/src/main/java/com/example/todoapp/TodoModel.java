@@ -27,7 +27,7 @@ public class TodoModel {
         for (int i=0; i < 3; i++){
             Todo todo = new Todo();
             todo.setTitle("Todo title " + i);
-            todo.setDetail("Detail for task " + todo.getId().toString());
+            todo.setDetail("Detail for task "+ i + todo.getId().toString());
             todo.setComplete(false);
 
             mTodoList.add(todo);
@@ -39,9 +39,9 @@ public class TodoModel {
     public Todo getTodo(UUID todoId) {
 
         for (Todo todo : mTodoList) {
-            /*if (todo.getId().equals(todoId)){
+            if (todo.getId().equals(todoId)){
                 return todo;
-            }*/
+            }
             return todo;
         }
 
